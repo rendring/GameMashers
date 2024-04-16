@@ -13,6 +13,12 @@ EditorBuildSettings:
       type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 731ed37ea47b8ca42ab4e264f5cc6896,
       type: 2}
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
+      guid: 84ac3c62677075840801f7d88229fe3c, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 2968dce0f2a91cf45abfcea70f01d4bd,
+      type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
+      guid: dab9da1bd62e09e419436981e20e1a1b, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
       guid: 401a6aa5a0bbb3842ae9209af92305f7, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: d023ae6747788464fb0f38b070ec5c06,
@@ -22,4 +28,6 @@ EditorBuildSettings:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 462b76fceeeef324aaa8b8e9a893c646,
       type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: a770a6abd8b52944d9fb8ad10c74396c,
+      type: 2}
+    xr.sdk.mock-hmd.settings: {fileID: 11400000, guid: 248ee6ff37ada824caf1edadbea39903,
       type: 2}
