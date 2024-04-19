@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class PhoneCam : MonoBehaviour
 {
+
+
+   
     private WebCamTexture backCam;
     private Texture defaultBackground;
-
+    public Quaternion baseRotation;
     public RawImage background;
     public Button cameraButton;
 
@@ -15,6 +18,7 @@ public class PhoneCam : MonoBehaviour
     void Start()
     {
         cameraButton.onClick.AddListener(OpenCamera);
+        baseRotation = transform.rotation;
     }
 
     public void OpenCamera()
@@ -33,6 +37,7 @@ public class PhoneCam : MonoBehaviour
             if (!devices[i].isFrontFacing)
             {
                 backCam = new WebCamTexture(devices[i].name, Screen.width, Screen.height);
+                transform.rotation = baseRotation * Quaternion.AngleAxis(backCam.videoRotationAngle, Vector3.up);
             }
         }
 
@@ -44,5 +49,7 @@ public class PhoneCam : MonoBehaviour
 
         backCam.Play();
         background.texture = backCam;
+
+       
     }
 }
