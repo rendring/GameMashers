@@ -10,10 +10,13 @@ public class GameBoard : MonoBehaviour
     [SerializeField] private float yOffset = 0.2f;
     [SerializeField] private Vector3 boardCenter = Vector3.zero;
 
-
+    [Header("Prefabs / Materials")]
+    [SerializeField] private GameObject[] prefabs;
+    [SerializeField] private Material[] teamMaterials;
 
 
     //logic 
+    private PawnPiece[,] pawnPieces;
     private const int TILE_COUNT_X = 8;
     private const int TILE_COUNT_Y = 8;
     private GameObject[,] tiles;
@@ -26,7 +29,9 @@ public class GameBoard : MonoBehaviour
 
     private void Awake()
     {
-        GenerateAllTiles(1, TILE_COUNT_X, TILE_COUNT_Y);
+        GenerateAllTiles(tileSize, TILE_COUNT_X, TILE_COUNT_Y);
+
+        SpawnAllPieces();
     }
     private void Update()
     {
@@ -103,6 +108,31 @@ public class GameBoard : MonoBehaviour
         tileObject.AddComponent<BoxCollider>();
 
         return tileObject;
+    }
+
+    // spawning of pieces
+    private void SpawnAllPieces()
+    {
+        pawnPieces = new PawnPiece[TILE_COUNT_X, TILE_COUNT_Y];
+
+        int GreenTeam = 0; //, BlueTeam = 1, OrangeTeam = 2, PurpleTeam = 3;
+
+        //green team 
+        pawnPieces[0, 0] = SpawnSinglePiece(ChessPieceType.Commander, GreenTeam);
+        pawnPieces[1, 2] = SpawnSinglePiece(ChessPieceType.Pawn, GreenTeam);
+        pawnPieces[2, 1] = SpawnSinglePiece(ChessPieceType.Pawn, GreenTeam);
+        pawnPieces[2, 1] = SpawnSinglePiece(ChessPieceType.Pawn, GreenTeam);
+    }
+    private PawnPiece SpawnSinglePiece(ChessPieceType type, int team)
+    {
+        PawnPiece cp = Instantiate(prefabs[(int)type - 1], transform).GetComponent<PawnPiece>();
+
+        cp.type = type;
+        cp.team = team;
+        cp.GetComponent<MeshRenderer>().material = teamMaterials[team];
+
+        return cp;
+
     }
 
     // operation
