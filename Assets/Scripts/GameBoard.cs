@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
@@ -32,6 +34,7 @@ public class GameBoard : MonoBehaviour
         GenerateAllTiles(tileSize, TILE_COUNT_X, TILE_COUNT_Y);
 
         SpawnAllPieces();
+        PositionAllPieces();
     }
     private void Update()
     {
@@ -110,18 +113,33 @@ public class GameBoard : MonoBehaviour
         return tileObject;
     }
 
-    // spawning of pieces
+    // spawning of pawns
     private void SpawnAllPieces()
     {
         pawnPieces = new PawnPiece[TILE_COUNT_X, TILE_COUNT_Y];
 
-        int GreenTeam = 0; //, BlueTeam = 1, OrangeTeam = 2, PurpleTeam = 3;
+        int GreenTeam = 0, BlueTeam = 1, OrangeTeam = 2, PurpleTeam = 3;
 
-        //green team 
+        //Green Team
         pawnPieces[0, 0] = SpawnSinglePiece(ChessPieceType.Commander, GreenTeam);
-        pawnPieces[1, 2] = SpawnSinglePiece(ChessPieceType.Pawn, GreenTeam);
-        pawnPieces[2, 1] = SpawnSinglePiece(ChessPieceType.Pawn, GreenTeam);
-        pawnPieces[2, 1] = SpawnSinglePiece(ChessPieceType.Pawn, GreenTeam);
+        pawnPieces[1, 0] = SpawnSinglePiece(ChessPieceType.Pawn1, GreenTeam);
+        pawnPieces[1, 1] = SpawnSinglePiece(ChessPieceType.Pawn2, GreenTeam);
+        pawnPieces[0, 1] = SpawnSinglePiece(ChessPieceType.Pawn3, GreenTeam);
+        //Blue Team
+        pawnPieces[7, 0] = SpawnSinglePiece(ChessPieceType.Commander, BlueTeam);
+        pawnPieces[7, 1] = SpawnSinglePiece(ChessPieceType.Pawn1, BlueTeam);
+        pawnPieces[6, 1] = SpawnSinglePiece(ChessPieceType.Pawn2, BlueTeam);
+        pawnPieces[6, 0] = SpawnSinglePiece(ChessPieceType.Pawn3, BlueTeam);
+        //Orange Team
+        pawnPieces[7, 7] = SpawnSinglePiece(ChessPieceType.Commander, OrangeTeam);
+        pawnPieces[7, 6] = SpawnSinglePiece(ChessPieceType.Pawn1, OrangeTeam);
+        pawnPieces[6, 6] = SpawnSinglePiece(ChessPieceType.Pawn2, OrangeTeam);
+        pawnPieces[6, 7] = SpawnSinglePiece(ChessPieceType.Pawn3, OrangeTeam);
+        //Purple Team
+        pawnPieces[0, 7] = SpawnSinglePiece(ChessPieceType.Commander, PurpleTeam);
+        pawnPieces[1, 7] = SpawnSinglePiece(ChessPieceType.Pawn1, PurpleTeam);
+        pawnPieces[1, 6] = SpawnSinglePiece(ChessPieceType.Pawn2, PurpleTeam);
+        pawnPieces[0, 6] = SpawnSinglePiece(ChessPieceType.Pawn3, PurpleTeam);
     }
     private PawnPiece SpawnSinglePiece(ChessPieceType type, int team)
     {
@@ -133,6 +151,25 @@ public class GameBoard : MonoBehaviour
 
         return cp;
 
+    }
+
+    //positioning 
+    private void PositionAllPieces()
+    {
+        for (int x = 0; x < TILE_COUNT_X; x++)
+            for (int y = 0; y < TILE_COUNT_Y; y++)
+                if (pawnPieces[x,y] != null)
+                    PositionSinglePiece(x,y, true);
+    }
+    private void PositionSinglePiece(int x, int y, bool force = false)
+    {
+        pawnPieces[x, y].currentX = x;
+        pawnPieces[x, y].currentY = y;
+        pawnPieces[x, y].transform.position = GetTileCentre(x, y);
+    }
+    private Vector3 GetTileCentre(int x, int y)
+    {
+        return new Vector3(x * tileSize, yOffset, y * tileSize) - bounds + new Vector3(tileSize / 2, 0, tileSize / 2);
     }
 
     // operation

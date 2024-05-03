@@ -3,8 +3,10 @@ using UnityEngine;
 public enum ChessPieceType
 {
     none = 0,
-    Pawn = 1,
-    Commander = 2,
+    Pawn1 = 1,
+    Pawn2 = 2,
+    Pawn3 = 3,
+    Commander = 4,
 }
 public class PawnPiece : MonoBehaviour
 {

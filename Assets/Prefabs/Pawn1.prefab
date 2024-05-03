@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5450360286615114938}
   - component: {fileID: 2009314666065862815}
   - component: {fileID: 6281523887088572458}
-  - component: {fileID: 5570556631271937235}
+  - component: {fileID: -5568542296849793094}
   m_Layer: 0
-  m_Name: Pawn
+  m_Name: Pawn1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5570556631271937235
+--- !u!114 &-5568542296849793094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
