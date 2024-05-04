@@ -11,14 +11,16 @@ public class GameBoard : MonoBehaviour
     [SerializeField] private float tileSize = 1.0f;
     [SerializeField] private float yOffset = 0.2f;
     [SerializeField] private Vector3 boardCenter = Vector3.zero;
+    [SerializeField] private float pawn_yOfset = 1.0f;
 
-    [Header("Prefabs / Materials")]
+   [Header("Prefabs / Materials")]
     [SerializeField] private GameObject[] prefabs;
     [SerializeField] private Material[] teamMaterials;
 
 
     //logic 
     private PawnPiece[,] pawnPieces;
+    private PawnPiece currentlyDragging;
     private const int TILE_COUNT_X = 8;
     private const int TILE_COUNT_Y = 8;
     private GameObject[,] tiles;
@@ -48,7 +50,7 @@ public class GameBoard : MonoBehaviour
         Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out info, 100, LayerMask.GetMask("Tile", "Hover")))
         {
-            //Get the indexes of tile we hit
+            //Get the indexes of tile hit
             Vector2Int hitPosition = LookupTileIndex(info.transform.gameObject);
 
             //If hovering any tile after not hovering any tile
@@ -64,6 +66,12 @@ public class GameBoard : MonoBehaviour
                 currentHover = hitPosition;
                 tiles[currentHover.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
             }
+
+
+            if(Input.GetMouseButtonDown(0))
+            {
+
+            }
         }
         else
         {
@@ -74,6 +82,7 @@ public class GameBoard : MonoBehaviour
             }
         }
     }
+
     //board generation
     private void GenerateAllTiles(float tileSize, int tileCountX, int tileCountY)
     {
@@ -169,7 +178,7 @@ public class GameBoard : MonoBehaviour
     }
     private Vector3 GetTileCentre(int x, int y)
     {
-        return new Vector3(x * tileSize, yOffset, y * tileSize) - bounds + new Vector3(tileSize / 2, 0, tileSize / 2);
+        return new Vector3(x * tileSize, yOffset, y * tileSize) - bounds + new Vector3(tileSize / 2, pawn_yOfset, tileSize / 2);
     }
 
     // operation

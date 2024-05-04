@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1230764454535921437}
   - component: {fileID: 1338768280095778463}
   - component: {fileID: 7954652886563496673}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Commander
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 6312657657402104976}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.365, z: 0}
+  m_LocalPosition: {x: 0, y: 1.49, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []

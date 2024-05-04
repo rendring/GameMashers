@@ -143,8 +143,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMaterial: {fileID: 2100000, guid: 593b9170c145e3e44a51c1cd6ab303dd, type: 2}
   tileSize: 1
-  yOffset: 0.935
+  yOffset: 1
   boardCenter: {x: 0, y: 0, z: 0}
+  pawn_yOfset: 0.155
   prefabs:
   - {fileID: 7346110655459796685, guid: 3484be9e435ec6c458361755ea22bedc, type: 3}
   - {fileID: 7346110655459796685, guid: e35a21ceae81fe9468df5cc49698324a, type: 3}
@@ -222,6 +223,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: gameboardprototype1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 54d11fbd44ecd9e48a89eae7158cf1f7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
