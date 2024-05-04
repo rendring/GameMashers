@@ -26,7 +26,7 @@ public class GameBoard : MonoBehaviour
     private GameObject[,] tiles;
     private Camera currentCamera;
     private Vector2Int currentHover;
-    private Vector3 bounds;
+    private Vector3 bounds; // ?
 
 
 
@@ -38,14 +38,17 @@ public class GameBoard : MonoBehaviour
         SpawnAllPieces();
         PositionAllPieces();
     }
+    
     private void Update()
     {
         //tile light up on hover
         if (!currentCamera)
         {
+            // Camera.current is old code and is no longer used
             currentCamera = Camera.main;
             return;
         }
+        
         RaycastHit info;
         Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out info, 100, LayerMask.GetMask("Tile", "Hover")))
