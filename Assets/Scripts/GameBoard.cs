@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -11,6 +12,8 @@ public class GameBoard : MonoBehaviour
     [SerializeField] private float tileSize = 1.0f;
     [SerializeField] private float yOffset = 0.2f;
     [SerializeField] private Vector3 boardCenter = Vector3.zero;
+ //   [SerializeField] private float deathSize = 0.3f;
+ //   [SerializeField] private float deathSpacing = 0.3f;
     [SerializeField] private float pawn_yOfset = 1.0f;
 
    [Header("Prefabs / Materials")]
@@ -21,6 +24,10 @@ public class GameBoard : MonoBehaviour
     //logic 
     private PawnPiece[,] pawnPieces;
     private PawnPiece currentlyDragging;
+ //   private List<PawnPiece> deadgreens = new List<PawnPiece>();
+ //   private List<PawnPiece> deadblues = new List<PawnPiece>();
+ //   private List<PawnPiece> deadoranges = new List<PawnPiece>();
+ //   private List<PawnPiece> deadpurples= new List<PawnPiece>();
     private const int TILE_COUNT_X = 8;
     private const int TILE_COUNT_Y = 8;
     private GameObject[,] tiles;
@@ -70,11 +77,37 @@ public class GameBoard : MonoBehaviour
                 tiles[currentHover.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
             }
 
-
+            //if press down mouse
             if(Input.GetMouseButtonDown(0))
             {
-
+                if (pawnPieces[hitPosition.x, hitPosition.y] != null)
+                {
+                    //is it our turn 
+                    if (true)
+                    {
+                        currentlyDragging = pawnPieces[hitPosition.x, hitPosition.y];
+                    }
+                }
             }
+
+            //if release mouse down
+            if (currentlyDragging != null && Input.GetMouseButtonUp(0))
+            {
+                Vector2Int previousPosition = new Vector2Int(currentlyDragging.currentX, currentlyDragging.currentY);
+
+                bool validMove = MoveTo(currentlyDragging, hitPosition.x, hitPosition.y);
+                if (!validMove)
+                {
+                    currentlyDragging.SetPosition(GetTileCentre(previousPosition.x, previousPosition.y));
+                    currentlyDragging = null;
+                }
+                else
+                {
+                    currentlyDragging = null;
+                }
+            }
+
+
         }
         else
         {
@@ -82,6 +115,12 @@ public class GameBoard : MonoBehaviour
             {
                 tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
                 currentHover = -Vector2Int.one;
+            }
+ 
+            if(currentlyDragging && Input.GetMouseButtonUp(0))
+            {
+                currentlyDragging.SetPosition(GetTileCentre(currentlyDragging.currentX, currentlyDragging.currentY));
+                currentlyDragging = null;
             }
         }
     }
@@ -177,7 +216,7 @@ public class GameBoard : MonoBehaviour
     {
         pawnPieces[x, y].currentX = x;
         pawnPieces[x, y].currentY = y;
-        pawnPieces[x, y].transform.position = GetTileCentre(x, y);
+        pawnPieces[x, y].SetPosition(GetTileCentre(x, y), force);
     }
     private Vector3 GetTileCentre(int x, int y)
     {
@@ -185,6 +224,54 @@ public class GameBoard : MonoBehaviour
     }
 
     // operation
+    private bool MoveTo(PawnPiece pp, int x, int y)
+    {
+        Vector2Int previousPosition = new Vector2Int(pp.currentX, pp.currentY);
+
+        // is position already occupied
+        if (pawnPieces[x,y] != null)
+        {
+            PawnPiece opp = pawnPieces[x, y];
+
+            //if postiion is enemy team = enemy death
+            if (pp.team == opp.team)
+                return false;
+
+            //when enemy pawn death = move pawn off board 
+            //           if (opp.team == 0)
+            //           {
+            //               deadgreens.Add(opp);
+            //               opp.Setscale(Vector3.one * deathSize);
+            //               opp.SetPosition(
+            //                   new Vector3(0 * tileSize, yOffset, -1 * tileSize)
+            //                   - bounds
+            //                   + new Vector3(tileSize / 2, 0, tileSize / 2)
+            //                   + (Vector3.right * deathSpacing) * deadgreens.Count);
+            //           }
+            //           else
+            //           {
+            //               deadblues.Add(opp);
+            //               opp.Setscale(Vector3.one * deathSize);
+            //               opp.SetPosition(
+            //                  new Vector3(8 * tileSize, yOffset, -1 * tileSize)
+            //                  - bounds
+            //                  + new Vector3(tileSize / 2, 0, tileSize / 2)
+            //                  + (Vector3.left * deathSpacing) * deadblues.Count);
+            //
+            //           }
+
+
+
+
+        }
+
+        pawnPieces[x, y] = pp;
+        pawnPieces[previousPosition.x, previousPosition.y] = null;
+
+        PositionSinglePiece(x, y);
+
+        return true;
+    }
     private Vector2Int LookupTileIndex(GameObject hitInfo)
     {
         for (int X = 0; X < TILE_COUNT_X; X++)
