@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class GameBoard : MonoBehaviour
 {
-    [Header("Art stuff")]
     [SerializeField] private Material tileMaterial;
     [SerializeField] private float tileSize = 1.0f;
     [SerializeField] private float yOffset = 0.2f;
@@ -15,8 +14,6 @@ public class GameBoard : MonoBehaviour
  //   [SerializeField] private float deathSize = 0.3f;
  //   [SerializeField] private float deathSpacing = 0.3f;
     [SerializeField] private float pawn_yOfset = 1.0f;
-
-   [Header("Prefabs / Materials")]
     [SerializeField] private GameObject[] prefabs;
     [SerializeField] private Material[] teamMaterials;
 

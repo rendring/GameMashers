@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnSystem : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
+    public PawnPiece script;
     // Start is called before the first frame update
     void Start()
     {
