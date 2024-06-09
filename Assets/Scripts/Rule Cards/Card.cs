@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 
-public class Card : MonoBehaviour
+public class Card
 {
     // 6/5/2024- Ren H: Set-Up for variables
     public int id;
